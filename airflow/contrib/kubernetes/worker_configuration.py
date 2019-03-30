@@ -251,7 +251,7 @@ class WorkerConfiguration(LoggingMixin):
         tolerations = kube_executor_config.tolerations or self.kube_config.kube_tolerations
         envs = self._get_environment()
         if kube_executor_config.envs:
-            envs = dict(self._get_environment(), **kube_executor_config.envs)
+            envs = dict(envs, **kube_executor_config.envs)
         return Pod(
             namespace=namespace,
             name=pod_id,
