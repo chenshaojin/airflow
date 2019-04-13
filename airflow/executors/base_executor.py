@@ -20,6 +20,7 @@
 from builtins import range
 
 from airflow import configuration, settings
+from airflow.utils import timezone
 from airflow.utils.log.logging_mixin import LoggingMixin
 from airflow.utils.state import State
 
@@ -55,7 +56,7 @@ class BaseExecutor(LoggingMixin):
         key = task_instance.key
         if key not in self.queued_tasks and key not in self.running:
             self.log.info("Adding to queue: %s", command)
-            self.queued_tasks[key] = (command, priority, queue, task_instance)
+            self.queued_tasks[key] = (command, priority, queue, task_instance, timezone.utcnow())
         else:
             self.log.info("could not queue task {}".format(key))
 
@@ -129,7 +130,9 @@ class BaseExecutor(LoggingMixin):
             key=lambda x: x[1][1],
             reverse=True)
         for i in range(min((open_slots, len(self.queued_tasks)))):
-            key, (command, _, queue, ti) = sorted_queue.pop(0)
+            key, (command, _, queue, ti, iqt) = sorted_queue.pop(0)
+            # scheduler_queue_time to task_queue_time
+            Stats.gauge('scheduler_to_task_queue_time', (timezone.utcnow() - iqt).total_seconds(), 1)
             # TODO(jlowin) without a way to know what Job ran which tasks,
             # there is a danger that another Job started running a task
             # that was also queued to this executor. This is the last chance
