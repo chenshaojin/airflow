@@ -52,6 +52,7 @@ from airflow.utils.db import provide_session
 from airflow.utils.log.logging_mixin import LoggingMixin
 from airflow.utils.state import State
 
+Stats = settings.Stats
 
 class SimpleDag(BaseDag):
     """
@@ -512,6 +513,8 @@ class DagFileProcessorAgent(LoggingMixin):
         """
         # Metadata and results to be harvested can be inconsistent,
         # but it should not be a big problem.
+        start_date = timezone.utcnow()
+
         self._sync_metadata()
         # Heartbeating after syncing metadata so we do not restart manager
         # if it processed all files for max_run times and exit normally.
@@ -526,6 +529,7 @@ class DagFileProcessorAgent(LoggingMixin):
             simple_dags.append(self._result_queue.get())
 
         self._result_count = 0
+        Stats.gauge('scheduler_harvesting_time', (timezone.utcnow() - start_date).total_seconds(), 1)
 
         return simple_dags
 
