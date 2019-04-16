@@ -1521,6 +1521,7 @@ class SchedulerJob(BaseJob):
             self._execute_helper()
         finally:
             self.processor_agent.end()
+            Stats.gauge('scheduler_heartbeat', 0, 1)
             self.log.info("Exited execute loop")
 
     def _execute_helper(self):
