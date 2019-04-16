@@ -1519,8 +1519,10 @@ class SchedulerJob(BaseJob):
 
         try:
             self._execute_helper()
+            Stats.gauge('scheduler_abnormal_exit', 1, 1)
         finally:
             self.processor_agent.end()
+            Stats.gauge('scheduler_abnormal_exit', 0, 1)
             self.log.info("Exited execute loop")
 
     def _execute_helper(self):
