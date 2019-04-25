@@ -143,7 +143,7 @@ class BackfillJobTest(unittest.TestCase):
 
         scheduler = SchedulerJob()
         queue = Mock()
-        scheduler._process_task_instances(target_dag, queue=queue)
+        scheduler._process_task_instances(target_dag, )
         self.assertFalse(queue.append.called)
 
         job = BackfillJob(
@@ -156,7 +156,7 @@ class BackfillJobTest(unittest.TestCase):
 
         scheduler = SchedulerJob()
         queue = Mock()
-        scheduler._process_task_instances(target_dag, queue=queue)
+        scheduler._process_task_instances(target_dag, )
 
         self.assertTrue(queue.append.called)
         target_dag.clear()
@@ -2459,7 +2459,7 @@ class SchedulerJobTest(unittest.TestCase):
                 ti.end_date = end_date
 
         queue = Mock()
-        scheduler._process_task_instances(dag, queue=queue)
+        scheduler._process_task_instances(dag, )
 
         queue.append.assert_called_with(
             (dag.dag_id, dag_task1.task_id, DEFAULT_DATE, TRY_NUMBER)
@@ -2491,7 +2491,7 @@ class SchedulerJobTest(unittest.TestCase):
             start_date=DEFAULT_DATE)
 
         queue = Mock()
-        scheduler._process_task_instances(dag, queue=queue)
+        scheduler._process_task_instances(dag, )
 
         queue.put.assert_not_called()
 
@@ -2517,7 +2517,7 @@ class SchedulerJobTest(unittest.TestCase):
         self.assertIsNone(dr)
 
         queue = Mock()
-        scheduler._process_task_instances(dag, queue=queue)
+        scheduler._process_task_instances(dag, )
 
         queue.put.assert_not_called()
 
@@ -2549,7 +2549,7 @@ class SchedulerJobTest(unittest.TestCase):
         session.close()
 
         queue = Mock()
-        scheduler._process_task_instances(dag, queue=queue)
+        scheduler._process_task_instances(dag, )
 
         queue.put.assert_not_called()
 
@@ -2587,7 +2587,7 @@ class SchedulerJobTest(unittest.TestCase):
             owner='airflow')
 
         queue = Mock()
-        scheduler._process_task_instances(dag, queue=queue)
+        scheduler._process_task_instances(dag, )
 
         tis = dr.get_task_instances()
         self.assertEquals(len(tis), 2)
@@ -2730,7 +2730,7 @@ class SchedulerJobTest(unittest.TestCase):
         queue = Mock()
         # and schedule them in, so we can check how many
         # tasks are put on the queue (should be one, not 3)
-        scheduler._process_task_instances(dag, queue=queue)
+        scheduler._process_task_instances(dag, )
 
         queue.append.assert_called_with(
             (dag.dag_id, dag_task1.task_id, DEFAULT_DATE, TRY_NUMBER)
@@ -2771,7 +2771,7 @@ class SchedulerJobTest(unittest.TestCase):
         dr = scheduler.create_dag_run(dag)
         self.assertIsNotNone(dr)
         queue = []
-        scheduler._process_task_instances(dag, queue=queue)
+        scheduler._process_task_instances(dag, )
         self.assertEquals(len(queue), 2)
         dagbag = self._make_simple_dag_bag([dag])
 

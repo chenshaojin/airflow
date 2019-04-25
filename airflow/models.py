@@ -1986,6 +1986,7 @@ class TaskInstance(Base, LoggingMixin):
             session.commit()
 
         ds = self.execution_date.strftime('%Y-%m-%d')
+        hour = self.execution_date.strftime('%H')
         ts = self.execution_date.isoformat()
         yesterday_ds = (self.execution_date - timedelta(1)).strftime('%Y-%m-%d')
         tomorrow_ds = (self.execution_date + timedelta(1)).strftime('%Y-%m-%d')
@@ -2069,6 +2070,7 @@ class TaskInstance(Base, LoggingMixin):
             'ts': ts,
             'ts_nodash': ts_nodash,
             'ts_nodash_with_tz': ts_nodash_with_tz,
+            'hour': hour,
             'yesterday_ds': yesterday_ds,
             'yesterday_ds_nodash': yesterday_ds_nodash,
             'tomorrow_ds': tomorrow_ds,

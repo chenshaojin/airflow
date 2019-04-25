@@ -149,7 +149,7 @@ class BaseExecutor(LoggingMixin):
                 self.running[key] = command
                 self.execute_async(key=key,
                                    command=command,
-                                   queue=queue,
+                                   ,
                                    executor_config=ti.executor_config)
             else:
                 self.log.info(
