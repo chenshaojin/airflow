@@ -26,8 +26,52 @@
 {% block tail_js %}
 {{ super() }}
 <script src="{{ url_for('static', filename='jqClock.min.js') }}" type="text/javascript"></script>
+<script src="http://ee-services.qutoutiao.net/lib/login-sdk.min.js"></script>
+
+
 <script>
-    x = new Date()
+
+var loginFlag = false;
+const {getUserInfo, login, logout, getToken} = EELogin.default;
+
+getUserInfo({isPerm: true})
+  .then(function (res) {
+    console.info(res.ldap_account);
+    console.info("loginFlag:" + loginFlag);
+    if (!res) {
+      login({
+        project: 'di-dk',
+        url: location.href,
+        qa: true //是否是测试环境
+      });
+    }
+    {# ---------------------------------- 开发中 调取dk平台返回用户信息 ------------------------------------------ #}
+    $.ajax({
+      url: "{{ url_for('admin.index') }}", // 请求keeper后台
+      type: "POST",
+      //headers: {
+      //  'token':getToken({isPerm: true})
+      //},
+      // dataType: "json",
+      contentType: "application/json",
+      data: JSON.stringify(res),
+      success: function (data) {
+
+        loginFlag = true;
+      }
+    })
+  }).catch(function (e) {
+  alert(e)
+});
+function df_logout() {
+  logout({isPerm: true}).then(function (res) {
+    loginFlag = false;
+    window.location.href = location.href;
+  });
+}
+</script>
+<script>
+    x = new Date();
     var UTCseconds = x.getTime();
     $("#clock").clock({
         "dateFormat":"Y-m-d ",
@@ -88,15 +132,16 @@
         <!-- clock and logout -->
         <ul class="nav navbar-nav navbar-right">
             <li><a id="clock"></a></li>
-            {% if current_user.is_authenticated %}
-              <li class="never_active"><a href="{{ url_for('airflow.logout') }}"><span data-toggle="tooltip" data-placement="left" title="Logout" class="glyphicon glyphicon-log-out"></span></a></li>
-            {% endif %}
+            <li class="never_active"><a id="xxxxx" onclick="df_logout()"><span data-toggle="tooltip" data-placement="left" title="Logout" class="glyphicon glyphicon-log-out"></span></a></li>
+{#            {% if current_user.is_authenticated %}#}
+{#              <li class="never_active"><a href="{{ url_for('airflow.logout') }}"><span data-toggle="tooltip" data-placement="left" title="Logout" class="glyphicon glyphicon-log-out"></span></a></li>#}
+{#            {% endif %}#}
         </ul>
           <ul class="nav navbar-nav navbar-right">
               <li><a id="clock"></a></li>
           </ul>
       </div>
-      </div>
+    </div>
 </nav>
   {% block messages %}
   {{ layout.messages() }}

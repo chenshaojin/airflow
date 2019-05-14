@@ -1,0 +1,30 @@
+[2019-05-09 16:48:11,377] {settings.py:146} DEBUG - Setting up DB connection pool (PID 58669)
+[2019-05-09 16:48:11,704] {__init__.py:42} DEBUG - Cannot import  due to  doesn't look like a module path
+[2019-05-09 16:48:12,133] {__init__.py:51} INFO - Using executor SequentialExecutor
+[2019-05-09 16:48:12,163] {cli_action_loggers.py:40} DEBUG - Adding <function default_action_log at 0x1045bf378> to pre execution callback
+[2019-05-09 16:48:12,752] {cli_action_loggers.py:64} DEBUG - Calling callbacks: [<function default_action_log at 0x1045bf378>]
+  ____________       _____________
+ ____    |__( )_________  __/__  /________      __
+____  /| |_  /__  ___/_  /_ __  /_  __ \_ | /| / /
+___  ___ |  / _  /   _  __/ _  / / /_/ /_ |/ |/ /
+ _/_/  |_/_/  /_/    /_/    /_/  \____/____/|__/
+ 
+[2019-05-09 16:48:17,780] {jobs.py:1510} INFO - Starting the scheduler
+[2019-05-09 16:48:17,780] {jobs.py:1520} INFO - Running execute loop for -1 seconds
+[2019-05-09 16:48:17,782] {jobs.py:1521} INFO - Processing each file at most -1 times
+[2019-05-09 16:48:17,782] {jobs.py:1524} INFO - Searching for files in /Users/arvin/IdeaProjects/airflow/dags
+[2019-05-09 16:48:17,783] {jobs.py:1526} INFO - There are 1 files in /Users/arvin/IdeaProjects/airflow/dags
+[2019-05-09 16:48:17,801] {jobs.py:1571} INFO - Resetting orphaned tasks for active dag runs
+[2019-05-09 16:48:17,815] {dag_processing.py:455} INFO - Launched DagFileProcessorManager with pid: 58676
+[2019-05-09 16:48:17,816] {jobs.py:1585} DEBUG - Starting Loop...
+[2019-05-09 16:48:17,818] {jobs.py:1593} DEBUG - Waiting for processors to finish since we're using sqlite
+[2019-05-09 16:48:17,823] {settings.py:51} INFO - Configured default timezone <Timezone [UTC]>
+[2019-05-09 16:48:17,826] {logging_config.py:63} DEBUG - Unable to load custom logging, using default config instead
+[2019-05-09 16:48:17,839] {settings.py:146} DEBUG - Setting up DB connection pool (PID 58676)
+[2019-05-09 16:48:17,844] {dag_processing.py:668} ERROR - Cannot use more than 1 thread when using sqlite. Setting parallelism to 1
+[2019-05-09 16:48:20,441] {dag_processing.py:592} INFO - Terminating manager process: 58676
+[2019-05-09 16:48:20,443] {dag_processing.py:597} INFO - Waiting up to 5s for manager process to exit...
+[2019-05-09 16:48:22,883] {settings.py:201} DEBUG - Disposing DB connection pool (PID 58677)
+[2019-05-09 16:48:22,932] {jobs.py:1550} INFO - Exited execute loop
+[2019-05-09 16:48:22,963] {cli_action_loggers.py:81} DEBUG - Calling callbacks: []
+[2019-05-09 16:48:22,964] {settings.py:201} DEBUG - Disposing DB connection pool (PID 58669)

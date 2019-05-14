@@ -30,9 +30,11 @@ START_DATE = now_to_the_hour
 DAG_NAME = 'test_dag_v1'
 
 default_args = {
-    'owner': 'airflow',
-    'depends_on_past': True,
-    'start_date': utils.dates.days_ago(2)
+    'owner': 'xiaoming',
+    'depends_on_past': False,
+    'start_date': utils.dates.days_ago(2),
+    'email_on_retry': False,
+    'security_group': '1'
 }
 dag = DAG(DAG_NAME, schedule_interval='*/10 * * * *', default_args=default_args)
 

@@ -70,6 +70,7 @@ def upgrade():
             sa.Column('pickle_id', sa.Integer(), nullable=True),
             sa.Column('fileloc', sa.String(length=2000), nullable=True),
             sa.Column('owners', sa.String(length=2000), nullable=True),
+            sa.Column('security_group', sa.String(length=2000), nullable=True),
             sa.PrimaryKeyConstraint('dag_id')
         )
     if 'dag_pickle' not in tables:
@@ -260,6 +261,18 @@ def upgrade():
             sa.Column('dag_id', sa.String(length=250), nullable=False),
             sa.PrimaryKeyConstraint('id')
         )
+    if 'user_record_info' not in tables:
+        op.create_table(
+            'user_record_info',
+            sa.Column('id', sa.Integer(), nullable=False),
+            sa.Column('user_id', sa.String(length=512), nullable=False),
+            sa.Column('dag', sa.String(length=512), nullable=False),
+            sa.Column('operation', sa.String(length=512), nullable=False),
+            sa.Column('security_group', sa.String(length=512), nullable=False),
+            sa.Column('create_time', sa.DateTime(), nullable=True),
+            sa.Column('update_time', sa.DateTime(), nullable=True),
+            sa.PrimaryKeyConstraint('id')
+        )
 
 
 def downgrade():
@@ -282,3 +295,4 @@ def downgrade():
     op.drop_table('dag')
     op.drop_table('connection')
     op.drop_table('xcom')
+    op.drop_table('user_record_info')
